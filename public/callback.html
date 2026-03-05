@@ -51,7 +51,7 @@
 <body>
   <div class="container">
     <div class="spinner"></div>
-    <div class="message" id="message">Authorizing...</div>
+    <div class="message" id="message">Processing...</div>
   </div>
 
   <script>
@@ -59,11 +59,14 @@
 
     function sendMessage(result, error = null) {
       const data = JSON.stringify({ result, error });
-      window.opener.postMessage(data, window.location.origin);
-      window.close();
+      if (window.opener) {
+        window.opener.postMessage(data, window.location.origin);
+      }
+      // 延迟关闭窗口，确保消息已发送
+      setTimeout(() => window.close(), 500);
     }
 
-    async function handleCallback() {
+    function handleCallback() {
       const urlParams = new URLSearchParams(window.location.search);
       const code = urlParams.get('code');
       const error = urlParams.get('error');
@@ -72,87 +75,20 @@
       if (error) {
         messageEl.textContent = 'Authorization denied';
         messageEl.classList.add('error');
-        setTimeout(() => sendMessage(null, error), 1000);
+        sendMessage(null, error);
         return;
       }
 
       if (!code) {
         messageEl.textContent = 'No authorization code found';
         messageEl.classList.add('error');
-        setTimeout(() => sendMessage(null, 'No code'), 1000);
+        sendMessage(null, 'No code');
         return;
       }
 
-      try {
-        messageEl.textContent = 'Getting access token...';
-
-        // 从 state 参数中获取 client_id 和 client_secret
-        let clientId, clientSecret;
-        if (state) {
-          try {
-            const stateData = JSON.parse(decodeURIComponent(state));
-            clientId = stateData.client_id;
-            clientSecret = stateData.client_secret;
-            console.log('State parsed successfully, clientId:', clientId);
-          } catch (e) {
-            console.error('Failed to parse state:', e);
-            throw new Error('Failed to parse state: ' + e.message);
-          }
-        }
-
-        if (!clientId || !clientSecret) {
-          throw new Error('Missing client credentials');
-        }
-
-        // 使用代理服务器获取 access_token
-        const proxyUrl = 'https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token';
-        console.log('Fetching access token from proxy...');
-        
-        let response;
-        try {
-          response = await fetch(proxyUrl, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-              client_id: clientId,
-              client_secret: clientSecret,
-              code: code,
-            }),
-          });
-        } catch (fetchError) {
-          console.error('Fetch error:', fetchError);
-          throw new Error('Network error: ' + fetchError.message);
-        }
-
-        console.log('Response status:', response.status);
-        const text = await response.text();
-        console.log('Response text:', text);
-
-        if (!response.ok) {
-          throw new Error('HTTP ' + response.status + ': ' + (text || 'Failed to get access token'));
-        }
-
-        // 解析 access_token
-        const accessTokenMatch = text.match(/access_token=([^&]+)/);
-        if (!accessTokenMatch) {
-          throw new Error('Invalid access token response: ' + text);
-        }
-
-        const accessToken = accessTokenMatch[1];
-        console.log('Access token obtained successfully');
-
-        messageEl.textContent = 'Authentication successful!';
-        
-        // 发送 access_token 给父窗口
-        setTimeout(() => sendMessage(accessToken), 500);
-      } catch (err) {
-        console.error('Auth error:', err);
-        messageEl.textContent = 'Authentication failed: ' + err.message;
-        messageEl.classList.add('error');
-        setTimeout(() => sendMessage(null, err.message), 3000);
-      }
+      // 将 code 和 state 传递给父窗口，由父窗口处理获取 token
+      messageEl.textContent = 'Redirecting...';
+      sendMessage({ code, state });
     }
 
     // 页面加载完成后处理回调

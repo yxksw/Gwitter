@@ -47,20 +47,16 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
     const windowOpts = `toolbar=0,scrollbars=1,status=1,resizable=1,location=1,menuBar=0,width=${windowArea.width},height=${windowArea.height},left=${windowArea.left},top=${windowArea.top}`;
 
-    return new Promise<string>((resolve, reject) => {
-      // 创建一个内联 HTML 用于处理 OAuth 回调
+    return new Promise<{ code: string; state: string }>((resolve, reject) => {
       const githubOauthUrl = 'https://github.com/login/oauth/authorize';
       const query = {
         client_id: config.request.clientID,
         redirect_uri: `${window.location.origin}/callback.html`,
         scope: 'public_repo',
-        state: JSON.stringify({
-          client_id: config.request.clientID,
-          client_secret: config.request.clientSecret,
-        }),
       };
       const loginLink = `${githubOauthUrl}?${queryStringify(query)}`;
 
+      console.log('Opening OAuth popup:', loginLink);
       const authWindow = window.open(loginLink, 'Gwitter OAuth Application', windowOpts);
 
       if (!authWindow) {
@@ -80,8 +76,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
           
           if (error) {
             reject(new Error(error));
-          } else if (result) {
-            resolve(result);
+          } else if (result && result.code) {
+            resolve({ code: result.code, state: result.state });
           }
         } catch (err) {
           // 忽略非 JSON 消息
@@ -109,7 +105,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       const originalResolve = resolve;
       const originalReject = reject;
       
-      resolve = ((value: string) => {
+      resolve = ((value: { code: string; state: string }) => {
         cleanup();
         originalResolve(value);
       }) as any;
@@ -121,23 +117,15 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     });
   };
 
-  // 检查 URL 中是否有 code 参数（OAuth 回调）
+  // 检查本地存储的 token
   useEffect(() => {
-    const urlParams = new URLSearchParams(window.location.search);
-    const code = urlParams.get('code');
-
     const storedToken = localStorage.getItem('github_token');
     const storedUser = localStorage.getItem('github_user');
 
-    // 如果有存储的 token，直接使用
-    if (storedToken && storedUser && !code) {
+    if (storedToken && storedUser) {
       setToken(storedToken);
       setUser(JSON.parse(storedUser));
       setIsAuthenticated(true);
-    }
-    // 如果有 code 参数，处理 OAuth 回调
-    else if (code) {
-      handleAuthCallback(code);
     }
     setIsLoading(false);
   }, []);
@@ -172,13 +160,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
       localStorage.setItem('github_token', accessToken);
       localStorage.setItem('github_user', JSON.stringify(user));
-
-      // 清除 URL 中的 code 参数
-      const url = new URL(window.location.href);
-      url.searchParams.delete('code');
-      window.history.replaceState({}, '', url.toString());
     } catch (error) {
       console.error('Auth callback error:', error);
+      alert('Authentication failed: ' + (error instanceof Error ? error.message : 'Unknown error'));
     } finally {
       setIsLoading(false);
     }
@@ -189,26 +173,14 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     try {
       setIsLoading(true);
       // 使用弹窗方式进行授权
-      const accessToken = await openAuthPopup();
+      const { code } = await openAuthPopup();
       
-      if (accessToken) {
-        // 使用 access_token 获取用户信息
-        const response = await getUserInfo(accessToken);
-        const user = {
-          login: response.login,
-          avatarUrl: response.avatar_url,
-        };
-
-        setToken(accessToken);
-        setUser(user);
-        setIsAuthenticated(true);
-
-        localStorage.setItem('github_token', accessToken);
-        localStorage.setItem('github_user', JSON.stringify(user));
+      if (code) {
+        await handleAuthCallback(code);
       }
     } catch (error) {
       console.error('Login error:', error);
-    } finally {
+      alert('Login failed: ' + (error instanceof Error ? error.message : 'Unknown error'));
       setIsLoading(false);
     }
   };
