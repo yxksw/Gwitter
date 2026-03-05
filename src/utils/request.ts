@@ -273,10 +273,16 @@ export const getUserInfo = async (token: string) => {
 };
 
 export const getAccessToken = async (code: string) => {
-  const response = await axios.post(config.request.autoProxy, {
-    client_id: config.request.clientID,
-    client_secret: config.request.clientSecret,
-    code,
+  const params = new URLSearchParams();
+  params.append('client_id', config.request.clientID);
+  params.append('client_secret', config.request.clientSecret);
+  params.append('code', code);
+
+  const response = await axios.post(config.request.autoProxy, params.toString(), {
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Accept': 'application/json',
+    },
   });
   return response.data;
 };
