@@ -1,0 +1,205 @@
+:root {
+  /* 明亮模式主题变量 */
+  --theme-bg-primary: #ffffff;
+  --theme-bg-secondary: #f7f9fa;
+  --theme-bg-tertiary: #f0f0f0;
+  --theme-bg-card: hsla(0, 0%, 100%, 0.8);
+  --theme-bg-input: rgba(255, 255, 255, 0.9);
+  --theme-bg-hover: #f0f0f0;
+  --theme-bg-border: #f1f1f1;
+  --theme-bg-border-strong: #e1e8ed;
+  
+  --theme-text-primary: #0f1419;
+  --theme-text-secondary: #536471;
+  --theme-text-tertiary: #657786;
+  --theme-text-quaternary: #a1a1a1;
+  --theme-text-link: #8f63e9;
+  --theme-text-link-hover: #132850;
+  
+  --theme-accent-primary: #1d9bf0;
+  --theme-accent-primary-hover: #1a8cd8;
+  --theme-accent-secondary: #8f63e9;
+  --theme-accent-like: #f91880;
+  --theme-accent-danger: #f4212e;
+  --theme-accent-danger-hover: #dc1c2a;
+  
+  --theme-shadow-sm: 0 0.1em 0.2em 0 rgba(234, 234, 234, 0.8);
+  --theme-shadow-md: 0 2px 10px rgba(0, 0, 0, 0.1);
+  --theme-shadow-lg: 0 4px 20px rgba(0, 0, 0, 0.15);
+  --theme-shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  
+  --theme-scrollbar-track: transparent;
+  --theme-scrollbar-thumb: #d1d9e0;
+  --theme-scrollbar-thumb-hover: #aab8c2;
+  
+  --theme-markdown-bg: transparent;
+  --theme-markdown-border: #d0d7de;
+  --theme-markdown-code-bg: rgba(232, 125, 143, 0.1);
+  --theme-markdown-code-text: #e96384;
+  --theme-markdown-blockquote: #d0d7de;
+  --theme-markdown-table-border: #d0d7de;
+  --theme-markdown-table-bg: #ffffff;
+  --theme-markdown-heading-text: #24292f;
+  
+  --theme-label-bg-base: 239, 231, 253;
+  --theme-skeleton-base: #f0f0f0;
+  --theme-skeleton-shine: #e0e0e0;
+  
+  --theme-overlay-bg: rgba(0, 0, 0, 0.4);
+  --theme-overlay-blur: blur(4px);
+  
+  --theme-toggle-bg: #ffffff;
+}
+
+[data-theme='dark'] {
+  /* 深色模式主题变量 */
+  --theme-bg-primary: #0f1419;
+  --theme-bg-secondary: #1a1f24;
+  --theme-bg-tertiary: #2f3336;
+  --theme-bg-card: rgba(31, 35, 40, 0.85);
+  --theme-bg-input: rgba(31, 35, 40, 0.9);
+  --theme-bg-hover: #2f3336;
+  --theme-bg-border: #2f3336;
+  --theme-bg-border-strong: #3d454e;
+  
+  --theme-text-primary: #f7f9f9;
+  --theme-text-secondary: #8b98a5;
+  --theme-text-tertiary: #6e767d;
+  --theme-text-quaternary: #8b98a5;
+  --theme-text-link: #b388ff;
+  --theme-text-link-hover: #d1bcf9;
+  
+  --theme-accent-primary: #1d9bf0;
+  --theme-accent-primary-hover: #1a8cd8;
+  --theme-accent-secondary: #b388ff;
+  --theme-accent-like: #f91880;
+  --theme-accent-danger: #f4212e;
+  --theme-accent-danger-hover: #dc1c2a;
+  
+  --theme-shadow-sm: 0 0.1em 0.2em 0 rgba(0, 0, 0, 0.4);
+  --theme-shadow-md: 0 2px 10px rgba(0, 0, 0, 0.3);
+  --theme-shadow-lg: 0 4px 20px rgba(0, 0, 0, 0.4);
+  --theme-shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.2);
+  
+  --theme-scrollbar-track: rgba(255, 255, 255, 0.05);
+  --theme-scrollbar-thumb: #3d454e;
+  --theme-scrollbar-thumb-hover: #4d555e;
+  
+  --theme-markdown-bg: transparent;
+  --theme-markdown-border: #30363d;
+  --theme-markdown-code-bg: rgba(235, 87, 87, 0.15);
+  --theme-markdown-code-text: #ff7b72;
+  --theme-markdown-blockquote: #3d444d;
+  --theme-markdown-table-border: #30363d;
+  --theme-markdown-table-bg: #0d1117;
+  --theme-markdown-heading-text: #c9d1d9;
+  
+  --theme-label-bg-base: 67, 56, 90;
+  --theme-skeleton-base: #2f3336;
+  --theme-skeleton-shine: #3d454e;
+  
+  --theme-overlay-bg: rgba(0, 0, 0, 0.6);
+  --theme-overlay-blur: blur(8px);
+  
+  --theme-toggle-bg: #1a1f24;
+}
+
+/* 全局样式重置和应用 */
+#root,
+#gwitter {
+  background-color: var(--theme-bg-primary);
+  color: var(--theme-text-primary);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* 滚动条样式 */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--theme-scrollbar-track);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--theme-scrollbar-thumb);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--theme-scrollbar-thumb-hover);
+}
+
+/* 选中文本样式 */
+::selection {
+  background-color: rgba(29, 155, 242, 0.3);
+  color: var(--theme-text-primary);
+}
+
+[data-theme='dark'] ::selection {
+  background-color: rgba(29, 155, 242, 0.4);
+}
+
+/* GitHub Markdown Dark Mode Overrides */
+[data-theme='dark'] .markdown-body {
+  color: var(--theme-text-primary);
+}
+
+[data-theme='dark'] .markdown-body a {
+  color: var(--theme-text-link);
+}
+
+[data-theme='dark'] .markdown-body a:hover {
+  color: var(--theme-text-link-hover);
+}
+
+[data-theme='dark'] .markdown-body code {
+  background-color: var(--theme-markdown-code-bg);
+  color: var(--theme-markdown-code-text);
+}
+
+[data-theme='dark'] .markdown-body pre {
+  background-color: var(--theme-bg-tertiary);
+  border: 1px solid var(--theme-markdown-border);
+}
+
+[data-theme='dark'] .markdown-body blockquote {
+  color: var(--theme-text-secondary);
+  border-left-color: var(--theme-markdown-blockquote);
+}
+
+[data-theme='dark'] .markdown-body table {
+  border-color: var(--theme-markdown-table-border);
+}
+
+[data-theme='dark'] .markdown-body table tr {
+  background-color: var(--theme-markdown-table-bg);
+  border-top-color: var(--theme-markdown-table-border);
+}
+
+[data-theme='dark'] .markdown-body table tr:nth-child(2n) {
+  background-color: var(--theme-bg-secondary);
+}
+
+[data-theme='dark'] .markdown-body table td,
+[data-theme='dark'] .markdown-body table th {
+  border-color: var(--theme-markdown-table-border);
+}
+
+[data-theme='dark'] .markdown-body img {
+  filter: brightness(0.9);
+}
+
+[data-theme='dark'] .markdown-body hr {
+  background-color: var(--theme-markdown-border);
+}
+
+[data-theme='dark'] .markdown-body h1,
+[data-theme='dark'] .markdown-body h2,
+[data-theme='dark'] .markdown-body h3,
+[data-theme='dark'] .markdown-body h4,
+[data-theme='dark'] .markdown-body h5,
+[data-theme='dark'] .markdown-body h6 {
+  color: var(--theme-markdown-heading-text);
+}

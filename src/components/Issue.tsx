@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import 'github-markdown-css/github-markdown-light.css';
+import 'github-markdown-css/github-markdown.css';
 import { useTranslation } from 'react-i18next';
 import { formatDate, ProcessedIssue, processLinksInHTML } from '../utils';
 import Interaction from './Interaction';
@@ -15,7 +15,7 @@ import { Spotlight } from './common/Spotlight';
 const Username = styled.span`
   font-weight: 700;
   font-size: 15px;
-  color: #132850;
+  color: var(--theme-text-link-hover);
   text-decoration: none;
   cursor: pointer;
 `;
@@ -36,11 +36,11 @@ const Badge = styled.svg`
 const Separator = styled.span`
   margin: 0 4px;
   font-weight: 600;
-  color: #a1a1a1;
+  color: var(--theme-text-quaternary);
   text-shadow:
-    #d9d9d9 0 0 1px,
-    #fffffb 0 0 1px,
-    #fffffb 0 0 2px;
+    var(--theme-bg-tertiary) 0 0 1px,
+    var(--theme-bg-primary) 0 0 1px,
+    var(--theme-bg-primary) 0 0 2px;
   font-size: 0.9em;
 
   @media (max-width: 479px) {
@@ -49,11 +49,11 @@ const Separator = styled.span`
 `;
 
 const DateText = styled.span`
-  color: #a1a1a1;
+  color: var(--theme-text-quaternary);
   text-shadow:
-    #d9d9d9 0 0 1px,
-    #fffffb 0 0 1px,
-    #fffffb 0 0 2px;
+    var(--theme-bg-tertiary) 0 0 1px,
+    var(--theme-bg-primary) 0 0 1px,
+    var(--theme-bg-primary) 0 0 2px;
   font-size: 0.9em;
 `;
 
@@ -74,12 +74,12 @@ const GitHubLink = styled.a`
   margin-left: 8px;
   display: inline-flex;
   align-items: center;
-  color: #a1a1a1;
+  color: var(--theme-text-quaternary);
   text-decoration: none;
   transition: color 0.2s ease;
 
   &:hover {
-    color: #132850;
+    color: var(--theme-text-link-hover);
   }
 
   @media (max-width: 479px) {
@@ -98,13 +98,13 @@ const IssueTitle = styled.div`
   font-size: 0.9em;
   font-weight: 500;
   line-height: 1.3;
-  color: #6b7280;
+  color: var(--theme-text-secondary);
   word-wrap: break-word;
   word-break: break-word;
-  background: #f8fafc;
+  background: var(--theme-bg-secondary);
   padding: 0.4em 0.6em;
   border-radius: 4px;
-  border-left: 3px solid #e5e7eb;
+  border-left: 3px solid var(--theme-bg-border-strong);
 
   @media (max-width: 479px) {
     font-size: 0.85em;

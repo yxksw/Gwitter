@@ -7,7 +7,7 @@ import {
 } from './common/IssueLayout';
 
 const SkeletonBase = styled.div`
-  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background: linear-gradient(90deg, var(--theme-skeleton-base) 25%, var(--theme-skeleton-shine) 50%, var(--theme-skeleton-base) 75%);
   background-size: 200px 100%;
   animation: skeleton-loading 3s infinite;
   border-radius: 4px;

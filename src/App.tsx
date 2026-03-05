@@ -6,6 +6,7 @@ import AnimatedCard from './components/AnimatedCard';
 import Egg from './components/Egg';
 import Issue from './components/Issue';
 import SkeletonCard from './components/SkeletonCard';
+import ThemeToggle from './components/ThemeToggle';
 import Toolbar from './components/Toolbar';
 import config from './config';
 
@@ -472,6 +473,7 @@ const App = () => {
         </IssuesContainer>
       )}
       {config.app.enableEgg && !hasNextPage && !repoError && <Egg />}
+      <ThemeToggle />
     </Container>
   );
 };

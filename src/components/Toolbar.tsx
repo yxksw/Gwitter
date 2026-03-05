@@ -10,16 +10,14 @@ const ToolbarContainer = styled.div`
   justify-content: space-between;
   align-items: center;
   padding: 12px 20px;
-  background: hsla(0, 0%, 100%, 0.8);
-
+  background: var(--theme-bg-card);
   border-radius: 10px;
-  border: 1px solid #e1e8ed;
-  margin-bottom: 16px;
-  backdrop-filter: blur(10px);
-  box-shadow: 0 0.1em 0.2em 0 rgba(234, 234, 234, 0.8);
-  border: 0.5px solid #f1f1f1;
+  border: 0.5px solid var(--theme-bg-border);
   margin: 6px;
   margin-bottom: 1em;
+  backdrop-filter: blur(10px);
+  box-shadow: var(--theme-shadow-sm);
+  transition: all 0.3s ease;
 
   ${config.app.enableRepoSwitcher && `
     @media (max-width: 600px) {
@@ -44,22 +42,22 @@ const RepoInputContainer = styled.div`
 
 const RepoInput = styled.input`
   padding: 6px 10px;
-  border: 1px solid #e1e8ed;
+  border: 1px solid var(--theme-bg-border-strong);
   border-radius: 16px;
   font-size: 12px;
-  background: rgba(255, 255, 255, 0.9);
-  color: #14171a;
+  background: var(--theme-bg-input);
+  color: var(--theme-text-primary);
   width: 180px;
   transition: all 0.2s;
 
   &:focus {
     outline: none;
-    border-color: #1da1f2;
-    box-shadow: 0 0 0 2px rgba(29, 161, 242, 0.1);
+    border-color: var(--theme-accent-primary);
+    box-shadow: 0 0 0 2px rgba(29, 161, 242, 0.15);
   }
 
   &::placeholder {
-    color: #657786;
+    color: var(--theme-text-tertiary);
   }
 
   @media (max-width: 768px) {
@@ -70,12 +68,12 @@ const RepoInput = styled.input`
 
 const RepoLabel = styled.span`
   font-size: 12px;
-  color: #657786;
+  color: var(--theme-text-tertiary);
   font-weight: 500;
 `;
 
 const ApplyButton = styled.button`
-  background: #1da1f2;
+  background: var(--theme-accent-primary);
   color: white;
   border: none;
   padding: 6px 12px;
@@ -86,7 +84,7 @@ const ApplyButton = styled.button`
   transition: all 0.2s;
 
   &:hover {
-    background: #1991db;
+    background: var(--theme-accent-primary-hover);
   }
 
   &:disabled {
@@ -101,7 +99,7 @@ const RightSection = styled.div`
 `;
 
 const LoginBtn = styled.button`
-  background: #1da1f2;
+  background: var(--theme-accent-primary);
   color: white;
   border: none;
   padding: 6px 12px;
@@ -115,13 +113,13 @@ const LoginBtn = styled.button`
   gap: 6px;
 
   &:hover {
-    background: #1991db;
+    background: var(--theme-accent-primary-hover);
   }
 `;
 
 const LogoutBtn = styled(LoginBtn)`
   background: transparent;
-  color: #657786;
+  color: var(--theme-text-secondary);
   border: none;
   padding: 0;
   font-size: 12px;
@@ -131,7 +129,7 @@ const LogoutBtn = styled(LoginBtn)`
   text-underline-offset: 2px;
 
   &:hover {
-    color: #657786;
+    color: var(--theme-text-secondary);
     background: transparent;
     opacity: 1;
   }
@@ -154,14 +152,14 @@ const UserAvatar = styled.img`
 const UserName = styled.span`
   font-size: 12px;
   font-weight: 500;
-  color: #14171a;
+  color: var(--theme-text-primary);
 `;
 
 const LoadingSpinner = styled.div`
   width: 16px;
   height: 16px;
-  border: 2px solid #e1e8ed;
-  border-top: 2px solid #1da1f2;
+  border: 2px solid var(--theme-bg-border-strong);
+  border-top: 2px solid var(--theme-accent-primary);
   border-radius: 50%;
   animation: spin 1s linear infinite;
 
@@ -181,7 +179,7 @@ const LoadingContainer = styled.div`
   gap: 8px;
   border-radius: 16px;
   font-size: 12px;
-  color: #657786;
+  color: var(--theme-text-tertiary);
 `;
 
 interface ToolbarProps {

@@ -40,9 +40,9 @@ const CommentsContainer = styled.div<{ isVisible: boolean }>`
   max-height: ${(props) => (props.isVisible ? '85vh' : '0')};
   overflow: hidden;
   transition: max-height 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  border-top: ${(props) => (props.isVisible ? '1px solid #e1e8ed' : 'none')};
+  border-top: ${(props) => (props.isVisible ? `1px solid var(--theme-bg-border-strong)` : 'none')};
   margin-top: ${(props) => (props.isVisible ? '16px' : '0')};
-  background: white;
+  background: var(--theme-bg-primary);
   will-change: max-height;
   contain: layout style;
 
@@ -87,16 +87,16 @@ const CommentsScrollArea = styled.div`
   }
 
   &::-webkit-scrollbar-track {
-    background: transparent;
+    background: var(--theme-scrollbar-track);
   }
 
   &::-webkit-scrollbar-thumb {
-    background: #d1d9e0;
+    background: var(--theme-scrollbar-thumb);
     border-radius: 3px;
   }
 
   &::-webkit-scrollbar-thumb:hover {
-    background: #aab8c2;
+    background: var(--theme-scrollbar-thumb-hover);
   }
 `;
 
@@ -104,13 +104,12 @@ const CommentItem = styled.div`
   display: flex;
   gap: 12px;
   padding: 12px 16px;
-  border-bottom: 1px solid #f7f9fa;
-  /* transition: background-color 0.2s ease; */
+  border-bottom: 1px solid var(--theme-bg-border);
 
   &:hover {
-    background-color: #f7f9fa;
+    background-color: var(--theme-bg-hover);
     .markdown-body {
-      background-color: #f7f9fa;
+      background-color: var(--theme-bg-hover);
     }
   }
 
@@ -147,7 +146,7 @@ const CommentHeader = styled.div`
 
 const CommentAuthor = styled.a`
   font-weight: 700;
-  color: #132850;
+  color: var(--theme-text-link-hover);
   font-size: 15px;
   text-decoration: none;
 
@@ -158,11 +157,11 @@ const CommentAuthor = styled.a`
 `;
 
 const CommentDate = styled.span`
-  color: #a1a1a1;
+  color: var(--theme-text-quaternary);
   text-shadow:
-    #d9d9d9 0 0 1px,
-    #fffffb 0 0 1px,
-    #fffffb 0 0 2px;
+    var(--theme-bg-tertiary) 0 0 1px,
+    var(--theme-bg-primary) 0 0 1px,
+    var(--theme-bg-primary) 0 0 2px;
   font-size: 0.9em;
 
   &::before {
@@ -172,8 +171,7 @@ const CommentDate = styled.span`
 `;
 
 const CommentBody = styled.div`
-  color: #333;
-  /* line-height: 1.3125; */
+  color: var(--theme-text-primary);
   word-wrap: break-word;
   margin-bottom: 12px;
   font-size: 1em;
@@ -213,22 +211,22 @@ const ActionButton = styled.button<{ variant?: 'edit' | 'delete' }>`
   ${(props) =>
     props.variant === 'edit'
       ? `
-    color: #1d9bf0;
+    color: var(--theme-accent-primary);
     &:hover {
       background: rgba(29, 155, 240, 0.1);
     }
   `
       : props.variant === 'delete'
         ? `
-    color: #f4212e;
+    color: var(--theme-accent-danger);
     &:hover {
       background: rgba(244, 33, 46, 0.1);
     }
   `
         : `
-    color: #536471;
+    color: var(--theme-text-secondary);
     &:hover {
-      background: #f7f9fa;
+      background: var(--theme-bg-hover);
     }
   `}
 
@@ -238,12 +236,12 @@ const ActionButton = styled.button<{ variant?: 'edit' | 'delete' }>`
   }
 `;
 
-// 更新CommentItem以包含ActionButton的悬停效果
+// 更新 CommentItem 以包含 ActionButton 的悬停效果
 const CommentItemWithHover = styled(CommentItem)`
   &:hover {
-    background-color: #f7f9fa;
+    background-color: var(--theme-bg-hover);
     .markdown-body {
-      background-color: #f7f9fa;
+      background-color: var(--theme-bg-hover);
     }
 
     .comment-actions {
@@ -254,7 +252,7 @@ const CommentItemWithHover = styled(CommentItem)`
 
 const LoadingText = styled.div`
   text-align: center;
-  color: #657786;
+  color: var(--theme-text-tertiary);
   padding: 32px 20px;
   font-size: 15px;
   display: flex;
@@ -266,8 +264,8 @@ const LoadingText = styled.div`
     content: '';
     width: 16px;
     height: 16px;
-    border: 2px solid #e1e8ed;
-    border-top: 2px solid #1d9bf0;
+    border: 2px solid var(--theme-bg-border-strong);
+    border-top: 2px solid var(--theme-accent-primary);
     border-radius: 50%;
     animation: spin 1s linear infinite;
   }
@@ -306,7 +304,7 @@ const ConfirmOverlay = styled.div<{ isOpen: boolean }>`
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.4);
+  background: var(--theme-overlay-bg);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -314,18 +312,16 @@ const ConfirmOverlay = styled.div<{ isOpen: boolean }>`
   opacity: ${(props) => (props.isOpen ? '1' : '0')};
   visibility: ${(props) => (props.isOpen ? 'visible' : 'hidden')};
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-  backdrop-filter: blur(4px);
+  backdrop-filter: var(--theme-overlay-blur);
 `;
 
 const ConfirmDialog = styled.div<{ isOpen: boolean }>`
-  background: white;
+  background: var(--theme-bg-primary);
   border-radius: 16px;
   padding: 24px;
   max-width: 360px;
   width: 90%;
-  box-shadow:
-    0 20px 25px -5px rgba(0, 0, 0, 0.1),
-    0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  box-shadow: var(--theme-shadow-xl);
   transform: ${(props) =>
     props.isOpen ? 'scale(1) translateY(0)' : 'scale(0.95) translateY(-8px)'};
   transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
@@ -336,14 +332,14 @@ const ConfirmTitle = styled.h3`
   margin: 0 0 8px 0;
   font-size: 18px;
   font-weight: 700;
-  color: #0f1419;
+  color: var(--theme-text-primary);
   line-height: 1.3;
 `;
 
 const ConfirmMessage = styled.p`
   margin: 0 0 20px 0;
   font-size: 15px;
-  color: #536471;
+  color: var(--theme-text-secondary);
   line-height: 1.4;
 `;
 
@@ -370,26 +366,26 @@ const ConfirmButton = styled.button<{ variant?: 'danger' | 'cancel' }>`
   ${(props) =>
     props.variant === 'danger'
       ? `
-    background: #f4212e;
+    background: var(--theme-accent-danger);
     color: white;
 
     &:hover:not(:disabled) {
-      background: #dc1c2a;
+      background: var(--theme-accent-danger-hover);
     }
 
     &:disabled {
-      background: #f7a1a8;
+      background: rgba(244, 33, 46, 0.5);
       cursor: not-allowed;
     }
   `
       : `
     background: transparent;
-    color: #0f1419;
-    border: 1px solid #cfd9de;
+    color: var(--theme-text-primary);
+    border: 1px solid var(--theme-bg-border-strong);
 
     &:hover {
-      background: #f7f9fa;
-      border-color: #8b98a5;
+      background: var(--theme-bg-hover);
+      border-color: var(--theme-text-tertiary);
     }
   `}
 `;

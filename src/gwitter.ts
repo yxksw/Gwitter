@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client';
 import App from './App';
 import { setConfig } from './config';
 import './i18n';
+import './styles/theme.css';
 import type { GwitterOptions } from './types/global';
 
 let gwitterInstance: ReactDOM.Root | null = null;

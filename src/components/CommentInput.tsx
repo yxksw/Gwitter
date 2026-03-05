@@ -13,9 +13,9 @@ interface CommentInputProps {
 }
 
 const InputContainer = styled.div<{ $isExpanded?: boolean }>`
-  background: white;
+  background: var(--theme-bg-primary);
   border-radius: 12px;
-  border: 1px solid #e1e8ed;
+  border: 1px solid var(--theme-bg-border-strong);
   padding: 12px;
   transition:
     max-height 0.25s cubic-bezier(0.4, 0, 0.2, 1),
@@ -26,7 +26,7 @@ const InputContainer = styled.div<{ $isExpanded?: boolean }>`
   contain: layout;
 
   &:focus-within {
-    border-color: #1d9bf0;
+    border-color: var(--theme-accent-primary);
   }
 `;
 
@@ -39,7 +39,7 @@ const TextArea = styled.textarea<{ $isExpanded?: boolean }>`
   line-height: 1.3125;
   resize: vertical;
   background: transparent;
-  color: #0f1419;
+  color: var(--theme-text-primary);
   transition: min-height 0.25s cubic-bezier(0.4, 0, 0.2, 1);
   will-change: min-height;
 
@@ -48,7 +48,7 @@ const TextArea = styled.textarea<{ $isExpanded?: boolean }>`
   }
 
   &::placeholder {
-    color: #536471;
+    color: var(--theme-text-secondary);
   }
 `;
 
@@ -58,7 +58,7 @@ const ButtonContainer = styled.div<{ $isExpanded?: boolean }>`
   justify-content: flex-end;
   margin-top: 12px;
   padding-top: 12px;
-  border-top: 1px solid #e1e8ed;
+  border-top: 1px solid var(--theme-bg-border-strong);
   opacity: ${(props) => (props.$isExpanded ? 1 : 0)};
   transition: opacity 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   pointer-events: ${(props) => (props.$isExpanded ? 'auto' : 'none')};
@@ -84,26 +84,26 @@ const Button = styled.button<{ variant?: 'primary' | 'secondary' }>`
   ${(props) =>
     props.variant === 'primary'
       ? `
-    background: #1d9bf0;
+    background: var(--theme-accent-primary);
     color: white;
 
     &:hover:not(:disabled) {
-      background: #1a8cd8;
+      background: var(--theme-accent-primary-hover);
     }
 
     &:disabled {
-      background: #8ecdf8;
+      background: rgba(29, 155, 240, 0.5);
       cursor: not-allowed;
     }
   `
       : `
     background: transparent;
-    color: #0f1419;
-    border: 1px solid #cfd9de;
+    color: var(--theme-text-primary);
+    border: 1px solid var(--theme-bg-border-strong);
 
     &:hover {
-      background: #f7f9fa;
-      border-color: #8b98a5;
+      background: var(--theme-bg-hover);
+      border-color: var(--theme-text-tertiary);
     }
   `}
 `;
