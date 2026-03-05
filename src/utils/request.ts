@@ -12,7 +12,7 @@ export const createAuthenticatedApi = (token: string) => {
 };
 
 export const api = createAuthenticatedApi(
-  config.request.token.replaceAll('?', ''),
+  config.request.token?.replaceAll('?', '') || '',
 );
 
 interface GetIssuesQLParams {
@@ -274,11 +274,11 @@ export const getUserInfo = async (token: string) => {
 
 export const getAccessToken = async (code: string) => {
   const params = new URLSearchParams();
-  params.append('client_id', config.request.clientID);
-  params.append('client_secret', config.request.clientSecret);
+  params.append('client_id', config.request.clientID || '');
+  params.append('client_secret', config.request.clientSecret || '');
   params.append('code', code);
 
-  const response = await axios.post(config.request.autoProxy, params.toString(), {
+  const response = await axios.post(config.request.autoProxy || '', params.toString(), {
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
       'Accept': 'application/json',

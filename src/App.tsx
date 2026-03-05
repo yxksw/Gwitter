@@ -5,6 +5,7 @@ import About from './components/About';
 import AnimatedCard from './components/AnimatedCard';
 import Egg from './components/Egg';
 import Issue from './components/Issue';
+import MusicCapsule from './components/MusicCapsule';
 import SkeletonCard from './components/SkeletonCard';
 import ThemeToggle from './components/ThemeToggle';
 import Toolbar from './components/Toolbar';
@@ -157,7 +158,7 @@ const App = () => {
           owner: repo.owner,
           repo: repo.repo,
           cursor: cursorRef.current,
-          pageSize: config.request.pageSize,
+          pageSize: config.request.pageSize || 6,
         }),
       );
       const data = res.data.data.repository.issues;
@@ -211,7 +212,7 @@ const App = () => {
           owner: currentRepo.owner,
           repo: currentRepo.repo,
           cursor: null,
-          pageSize: config.request.pageSize,
+          pageSize: config.request.pageSize || 6,
         }),
       );
 
@@ -475,6 +476,7 @@ const App = () => {
       )}
       {config.app.enableEgg && !hasNextPage && !repoError && <Egg />}
       <ThemeToggle />
+      <MusicCapsule />
     </Container>
   );
 };

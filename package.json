@@ -43,6 +43,7 @@
     "@types/lodash": "^4.17.17",
     "@types/react-flip-move": "^2.9.12",
     "@types/react-router-dom": "^5.3.3",
+    "aplayer": "^1.10.1",
     "axios": "^1.9.0",
     "balloons-js": "^0.0.3",
     "date-fns": "^4.1.0",

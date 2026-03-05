@@ -1,3 +1,12 @@
+export interface MusicCapsuleConfig {
+  enable?: boolean;
+  id?: string | number;
+  server?: 'netease' | 'tencent' | 'xiami' | 'kugou' | 'baidu';
+  type?: 'playlist' | 'song' | 'album' | 'artist' | 'search';
+  meting_api?: string;
+  volume?: number;
+}
+
 export interface GwitterConfig {
   request?: {
     token?: string;
@@ -14,6 +23,7 @@ export interface GwitterConfig {
     enableAbout?: boolean;
     enableEgg?: boolean;
   };
+  music?: MusicCapsuleConfig;
 }
 
 export interface GwitterOptions {

@@ -50,7 +50,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     return new Promise<{ code: string; state: string }>((resolve, reject) => {
       const githubOauthUrl = 'https://github.com/login/oauth/authorize';
       const query = {
-        client_id: config.request.clientID,
+        client_id: config.request.clientID || '',
         redirect_uri: `${window.location.origin}/callback.html`,
         scope: 'public_repo',
       };

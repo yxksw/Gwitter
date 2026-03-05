@@ -71,5 +71,8 @@
     "like": "Like",
     "liked": "Liked",
     "likes": "likes"
+  },
+  "music": {
+    "hit": "Click to play music"
   }
 }

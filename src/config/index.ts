@@ -1,6 +1,10 @@
-import { GwitterConfig } from '../types/global';
+import { GwitterConfig, MusicCapsuleConfig } from '../types/global';
 
-let config = {
+let config: {
+  request: GwitterConfig['request'] & { owner: string; repo: string };
+  app: NonNullable<GwitterConfig['app']>;
+  music: MusicCapsuleConfig;
+} = {
   request: {
     token: process.env.REACT_APP_GITHUB_TOKEN || 'g?i?t?h?u?b?_?p?a?t?_?1?1?A?H?V?6?E?W?Q?0?M?f?C?S?r?0?4?K?A?j?1?F?_?3?7?n?4?U?y?u?S?m?d?z?i?t?D?s?w?i?s?i?u?a?g?N?b?a?k?V?n?L?I?7?U?W?s?s?h?n?K?p?s?H?S?D?S?4?D?K?O?Q?Q?J?S?S?x?q?z?Z?X?M',
     clientID: process.env.REACT_APP_GITHUB_CLIENT_ID || 'Ov23li234333SDUMH9',
@@ -17,6 +21,15 @@ let config = {
     enableAbout: true,
     enableEgg: true,
   },
+
+  music: {
+    enable: true,
+    id: '13681647281',
+    server: 'netease',
+    type: 'playlist',
+    meting_api: 'https://meting.050815.xyz/api',
+    volume: 0.8,
+  },
 };
 
 export function setConfig(newConfig: GwitterConfig) {
@@ -31,6 +44,13 @@ export function setConfig(newConfig: GwitterConfig) {
     config.app = {
       ...config.app,
       ...newConfig.app,
+    };
+  }
+
+  if (newConfig.music) {
+    config.music = {
+      ...config.music,
+      ...newConfig.music,
     };
   }
 }
