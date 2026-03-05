@@ -93,8 +93,10 @@
             const stateData = JSON.parse(decodeURIComponent(state));
             clientId = stateData.client_id;
             clientSecret = stateData.client_secret;
+            console.log('State parsed successfully, clientId:', clientId);
           } catch (e) {
             console.error('Failed to parse state:', e);
+            throw new Error('Failed to parse state: ' + e.message);
           }
         }
 
@@ -104,31 +106,42 @@
 
         // 使用代理服务器获取 access_token
         const proxyUrl = 'https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token';
-        const response = await fetch(proxyUrl, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            client_id: clientId,
-            client_secret: clientSecret,
-            code: code,
-          }),
-        });
+        console.log('Fetching access token from proxy...');
+        
+        let response;
+        try {
+          response = await fetch(proxyUrl, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              client_id: clientId,
+              client_secret: clientSecret,
+              code: code,
+            }),
+          });
+        } catch (fetchError) {
+          console.error('Fetch error:', fetchError);
+          throw new Error('Network error: ' + fetchError.message);
+        }
 
+        console.log('Response status:', response.status);
         const text = await response.text();
+        console.log('Response text:', text);
 
         if (!response.ok) {
-          throw new Error(text || 'Failed to get access token');
+          throw new Error('HTTP ' + response.status + ': ' + (text || 'Failed to get access token'));
         }
 
         // 解析 access_token
         const accessTokenMatch = text.match(/access_token=([^&]+)/);
         if (!accessTokenMatch) {
-          throw new Error('Invalid access token response');
+          throw new Error('Invalid access token response: ' + text);
         }
 
         const accessToken = accessTokenMatch[1];
+        console.log('Access token obtained successfully');
 
         messageEl.textContent = 'Authentication successful!';
         
@@ -138,7 +151,7 @@
         console.error('Auth error:', err);
         messageEl.textContent = 'Authentication failed: ' + err.message;
         messageEl.classList.add('error');
-        setTimeout(() => sendMessage(null, err.message), 2000);
+        setTimeout(() => sendMessage(null, err.message), 3000);
       }
     }
 
