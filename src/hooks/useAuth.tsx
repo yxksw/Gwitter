@@ -53,6 +53,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         client_id: config.request.clientID || '',
         redirect_uri: `${window.location.origin}/callback.html`,
         scope: 'public_repo',
+        prompt: 'select_account',
       };
       const loginLink = `${githubOauthUrl}?${queryStringify(query)}`;
 
