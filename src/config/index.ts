@@ -6,8 +6,7 @@ let config = {
     clientID: process.env.REACT_APP_GITHUB_CLIENT_ID || 'Ov23li234333SDUMH9',
     clientSecret: process.env.REACT_APP_GITHUB_CLIENT_SECRET || 'ac29f7db905cfda7213446329b9b3a72958e1da',
     pageSize: 6,
-    autoProxy:
-      'https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token',
+    autoProxy: 'https://gwitter-api.261770.xyz',
     owner: 'yxksw',
     repo: 'weibo',
   },
