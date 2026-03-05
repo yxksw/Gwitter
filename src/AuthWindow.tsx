@@ -82,27 +82,40 @@ const AuthWindow = () => {
   const { t } = useTranslation();
 
   useEffect(() => {
-    const code = parseUrl().code;
-    if (code) {
-      getAccessToken(code)
-        .then((res) => {
-          window.opener.postMessage(
-            JSON.stringify({
-              result: res,
-            }),
-            window.opener.location,
-          );
-        })
-        .catch((err) => {
-          window.opener.postMessage(
-            JSON.stringify({
-              error: err.message,
-            }),
-            window.opener.location,
-          );
-          console.error(err);
-        });
+    if (!window.opener) {
+      console.error('No opener window found');
+      return;
     }
+
+    const code = parseUrl().code;
+    if (!code) {
+      window.opener.postMessage(
+        JSON.stringify({
+          error: 'No authorization code received',
+        }),
+        window.opener.location,
+      );
+      return;
+    }
+
+    getAccessToken(code)
+      .then((res) => {
+        window.opener.postMessage(
+          JSON.stringify({
+            result: res,
+          }),
+          window.opener.location,
+        );
+      })
+      .catch((err) => {
+        window.opener.postMessage(
+          JSON.stringify({
+            error: err.message || 'Failed to get access token',
+          }),
+          window.opener.location,
+        );
+        console.error(err);
+      });
   }, []);
 
   return (

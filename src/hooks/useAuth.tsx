@@ -48,20 +48,20 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     setIsLoading(false);
   }, []);
 
-  const handleAuthCallback = async (code: string) => {
+  const handleAuthCallback = async (accessToken: string) => {
     setIsLoading(true);
     try {
-      const response = await getUserInfo(code);
+      const response = await getUserInfo(accessToken);
       const user = {
         login: response.login,
         avatarUrl: response.avatar_url,
       };
 
-      setToken(code);
+      setToken(accessToken);
       setUser(user);
       setIsAuthenticated(true);
 
-      localStorage.setItem('github_token', code);
+      localStorage.setItem('github_token', accessToken);
       localStorage.setItem('github_user', JSON.stringify(user));
     } catch (error) {
       console.error('Auth callback error:', error);
@@ -79,13 +79,16 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       scope: 'public_repo',
     };
     const loginLink = `${githubOauthUrl}?${queryStringify(query)}`;
+    console.log('Opening OAuth window with client_id:', config.request.clientID);
     setIsLoading(true);
     windowOpen(loginLink)
       .then((token: unknown) => {
+        console.log('Received access token, fetching user info...');
         handleAuthCallback(token as string);
       })
       .catch((error) => {
         console.error('Login error:', error);
+        alert('Login failed: ' + (error || 'Unknown error'));
         setIsLoading(false);
       });
   };
