@@ -42,14 +42,14 @@ const ClosingMessage = styled.div`
   width: 85%;
   max-width: 600px;
   border-radius: clamp(6px, 1.5vw, 12px);
-  background: rgba(255, 255, 255, 0.9);
+  background: var(--theme-bg-card);
   backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  border: 1px solid var(--theme-bg-border);
   position: relative;
   overflow: hidden;
   transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   z-index: 2;
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+  box-shadow: var(--theme-shadow-md);
   transform: rotate(-3deg) perspective(800px);
   transform-style: preserve-3d;
 
@@ -79,7 +79,7 @@ const ClosingMessage = styled.div`
 
   &:hover {
     transform: rotate(0deg) perspective(800px) translateY(-10px);
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
+    box-shadow: var(--theme-shadow-lg);
 
     &:before {
       opacity: 1;
@@ -113,8 +113,8 @@ const ClosingMessage = styled.div`
 `;
 
 const CodeBlock = styled.div`
-  background: #282c34;
-  color: #abb2bf;
+  background: var(--theme-bg-tertiary);
+  color: var(--theme-text-secondary);
   border-radius: 8px;
   padding: clamp(0.6em, 1.5vw, 1em);
   font-family: monospace;
@@ -125,7 +125,7 @@ const CodeBlock = styled.div`
   max-width: 500px;
   overflow: auto;
   position: relative;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--theme-shadow-sm);
   transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 
   @media (max-width: 768px) {
@@ -155,19 +155,19 @@ const CodeLine = styled.span<{ delay: number }>`
 `;
 
 const Keyword = styled.span`
-  color: #c678dd;
+  color: var(--keyword-color, #c678dd);
 `;
 
 const Function = styled.span`
-  color: #61afef;
+  color: var(--function-color, #61afef);
 `;
 
 const String = styled.span`
-  color: #98c379;
+  color: var(--string-color, #98c379);
 `;
 
 const Comment = styled.span`
-  color: #7d8799;
+  color: var(--comment-color, #7d8799);
 `;
 
 const ButtonContainer = styled.div`

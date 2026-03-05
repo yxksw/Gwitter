@@ -11,6 +11,7 @@ import Toolbar from './components/Toolbar';
 import config from './config';
 
 import { AuthProvider, useAuth } from './hooks/useAuth';
+import { ThemeProvider } from './hooks/useTheme';
 import {
   getRepoFromUrl,
   ProcessedIssue,
@@ -480,9 +481,11 @@ const App = () => {
 
 const AppWithAuth = () => {
   return (
-    <AuthProvider>
-      <App />
-    </AuthProvider>
+    <ThemeProvider>
+      <AuthProvider>
+        <App />
+      </AuthProvider>
+    </ThemeProvider>
   );
 };
 

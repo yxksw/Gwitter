@@ -203,3 +203,11 @@
 [data-theme='dark'] .markdown-body h6 {
   color: var(--theme-markdown-heading-text);
 }
+
+/* Egg 组件代码高亮颜色 - 深色模式 */
+[data-theme='dark'] {
+  --keyword-color: #bb9af7;
+  --function-color: #7aa2f7;
+  --string-color: #9ece6a;
+  --comment-color: #565f89;
+}
