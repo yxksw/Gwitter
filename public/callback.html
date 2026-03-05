@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GitHub OAuth Callback</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+        'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+        sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      background: #f5f5f5;
+    }
+    .container {
+      text-align: center;
+      padding: 40px;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      max-width: 400px;
+    }
+    .spinner {
+      border: 3px solid #f3f3f3;
+      border-top: 3px solid #0366d6;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      animation: spin 1s linear infinite;
+      margin: 0 auto 20px;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    .message {
+      color: #586069;
+      font-size: 16px;
+      margin: 10px 0;
+    }
+    .error {
+      color: #cb2431;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="spinner"></div>
+    <div class="message" id="message">Authorizing...</div>
+  </div>
+
+  <script>
+    const messageEl = document.getElementById('message');
+
+    function sendMessage(result, error = null) {
+      const data = JSON.stringify({ result, error });
+      window.opener.postMessage(data, window.location.origin);
+      window.close();
+    }
+
+    async function handleCallback() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const code = urlParams.get('code');
+      const error = urlParams.get('error');
+      const state = urlParams.get('state');
+
+      if (error) {
+        messageEl.textContent = 'Authorization denied';
+        messageEl.classList.add('error');
+        setTimeout(() => sendMessage(null, error), 1000);
+        return;
+      }
+
+      if (!code) {
+        messageEl.textContent = 'No authorization code found';
+        messageEl.classList.add('error');
+        setTimeout(() => sendMessage(null, 'No code'), 1000);
+        return;
+      }
+
+      try {
+        messageEl.textContent = 'Getting access token...';
+
+        // 从 state 参数中获取 client_id 和 client_secret
+        let clientId, clientSecret;
+        if (state) {
+          try {
+            const stateData = JSON.parse(decodeURIComponent(state));
+            clientId = stateData.client_id;
+            clientSecret = stateData.client_secret;
+          } catch (e) {
+            console.error('Failed to parse state:', e);
+          }
+        }
+
+        if (!clientId || !clientSecret) {
+          throw new Error('Missing client credentials');
+        }
+
+        // 使用代理服务器获取 access_token
+        const proxyUrl = 'https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token';
+        const response = await fetch(proxyUrl, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            client_id: clientId,
+            client_secret: clientSecret,
+            code: code,
+          }),
+        });
+
+        const text = await response.text();
+
+        if (!response.ok) {
+          throw new Error(text || 'Failed to get access token');
+        }
+
+        // 解析 access_token
+        const accessTokenMatch = text.match(/access_token=([^&]+)/);
+        if (!accessTokenMatch) {
+          throw new Error('Invalid access token response');
+        }
+
+        const accessToken = accessTokenMatch[1];
+
+        messageEl.textContent = 'Authentication successful!';
+        
+        // 发送 access_token 给父窗口
+        setTimeout(() => sendMessage(accessToken), 500);
+      } catch (err) {
+        console.error('Auth error:', err);
+        messageEl.textContent = 'Authentication failed: ' + err.message;
+        messageEl.classList.add('error');
+        setTimeout(() => sendMessage(null, err.message), 2000);
+      }
+    }
+
+    // 页面加载完成后处理回调
+    handleCallback();
+  </script>
+</body>
+</html>
