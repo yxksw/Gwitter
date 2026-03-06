@@ -16,7 +16,7 @@
     "title": "Details & Summary",
     "gwitter": {
       "title": "🎉 关于 Gwitter",
-      "description": "这是一个基于 GitHub Issues 构建的轻量级微博应用。这里记录着我对技术的思考、对生活的感悟，以及一些有趣的发现，欢迎一起交流。"
+      "description": "欢迎来到异飨客的Gwitter，您可以在这里看到我的生活日常记录~"
     },
     "content": {
       "title": "✨ 关于内容",
@@ -26,8 +26,9 @@
       "title": "🔊 关于订阅",
       "watch": "Watch",
       "join": "Join",
+      "add": "添加",
       "repo": "Gwitter 仓库",
-      "wechat": "微信群",
+      "Friends": "电报好友",
       "telegram": "TG 频道"
     }
   },
