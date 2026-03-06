@@ -141,6 +141,70 @@
   background-color: rgba(29, 155, 242, 0.4);
 }
 
+/* GitHub Markdown Light Mode Overrides */
+.markdown-body {
+  color: var(--theme-text-primary);
+  background-color: transparent !important;
+}
+
+.markdown-body a {
+  color: var(--theme-text-link);
+}
+
+.markdown-body a:hover {
+  color: var(--theme-text-link-hover);
+}
+
+.markdown-body code {
+  background-color: var(--theme-markdown-code-bg);
+  color: var(--theme-markdown-code-text);
+}
+
+.markdown-body pre {
+  background-color: var(--theme-bg-tertiary);
+  border: 1px solid var(--theme-markdown-border);
+}
+
+.markdown-body blockquote {
+  color: var(--theme-text-secondary);
+  border-left-color: var(--theme-markdown-blockquote);
+}
+
+.markdown-body table {
+  border-color: var(--theme-markdown-table-border);
+}
+
+.markdown-body table tr {
+  background-color: var(--theme-markdown-table-bg);
+  border-top-color: var(--theme-markdown-table-border);
+}
+
+.markdown-body table tr:nth-child(2n) {
+  background-color: var(--theme-bg-secondary);
+}
+
+.markdown-body table td,
+.markdown-body table th {
+  border-color: var(--theme-markdown-table-border);
+}
+
+.markdown-body img {
+  background-color: transparent;
+}
+
+.markdown-body hr {
+  background-color: var(--theme-markdown-border);
+}
+
+.markdown-body h1,
+.markdown-body h2,
+.markdown-body h3,
+.markdown-body h4,
+.markdown-body h5,
+.markdown-body h6 {
+  color: var(--theme-markdown-heading-text);
+}
+
 /* GitHub Markdown Dark Mode Overrides */
 [data-theme='dark'] .markdown-body {
   color: var(--theme-text-primary);
