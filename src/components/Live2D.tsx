@@ -42,6 +42,7 @@ const Live2D = () => {
 
     // 使用多个 CDN 源作为备选
     const cdnPaths = [
+      'https://cdn.jsdmirror.com/gh/dogxii/live2d-widget-v3@main/',
       'https://cdn.jsdelivr.net/gh/dogxii/live2d-widget-v3@main/',
       'https://fastly.jsdelivr.net/gh/dogxii/live2d-widget-v3@main/',
       'https://gcore.jsdelivr.net/gh/dogxii/live2d-widget-v3@main/',
@@ -124,12 +125,12 @@ const Live2D = () => {
           attempts++;
           console.log('[Live2D] Checking initWidget, attempt:', attempts);
 
-          if (typeof (window as any).initWidget === 'function') {
+          if (typeof window.initWidget === 'function') {
             clearInterval(checkInit);
             console.log('[Live2D] initWidget found, initializing...');
 
             try {
-              (window as any).initWidget({
+              window.initWidget({
                 waifuPath: config.path.tipsJsonPath,
                 cdnPath: config.path.modelPath,
                 tools: config.tools,

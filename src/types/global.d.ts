@@ -34,5 +34,13 @@ export interface GwitterOptions {
 declare global {
   interface Window {
     gwitter?: (options?: GwitterOptions) => void;
+    initWidget?: (config: {
+      waifuPath: string;
+      cdnPath: string;
+      tools: string[];
+      dragEnable: boolean;
+      dragDirection: readonly string[];
+      switchType: string;
+    }) => void;
   }
 }
