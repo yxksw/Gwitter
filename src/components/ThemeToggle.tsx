@@ -3,10 +3,10 @@ import { useTheme } from '../hooks/useTheme';
 
 const ToggleButton = styled.button`
   position: fixed;
-  bottom: 20px;
-  right: 20px;
-  width: 48px;
-  height: 48px;
+  bottom: 60px;
+  left: 10px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
   border: none;
   background: var(--theme-toggle-bg, #ffffff);
@@ -16,7 +16,7 @@ const ToggleButton = styled.button`
   align-items: center;
   justify-content: center;
   transition: all 0.3s ease;
-  z-index: 1000;
+  z-index: 10001;
 
   &:hover {
     transform: scale(1.1);
@@ -28,8 +28,8 @@ const ToggleButton = styled.button`
   }
 
   svg {
-    width: 24px;
-    height: 24px;
+    width: 20px;
+    height: 20px;
   }
 `;
 

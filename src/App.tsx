@@ -5,6 +5,7 @@ import About from './components/About';
 import AnimatedCard from './components/AnimatedCard';
 import Egg from './components/Egg';
 import Issue from './components/Issue';
+import Live2D from './components/Live2D';
 import MusicCapsule from './components/MusicCapsule';
 import SkeletonCard from './components/SkeletonCard';
 import ThemeToggle from './components/ThemeToggle';
@@ -477,6 +478,7 @@ const App = () => {
       {config.app.enableEgg && !hasNextPage && !repoError && <Egg />}
       <ThemeToggle />
       <MusicCapsule />
+      <Live2D />
     </Container>
   );
 };
